@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conversor de Texto para JSON - ConversaLearn</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        h1 {
+            color: #667eea;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            color: #64748b;
+            margin-bottom: 2rem;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .section {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #1e293b;
+        }
+
+        textarea, input {
+            padding: 1rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            resize: vertical;
+        }
+
+        textarea {
+            min-height: 400px;
+        }
+
+        textarea:focus, input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn-secondary {
+            background: #e2e8f0;
+            color: #1e293b;
+        }
+
+        .actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .alert {
+            padding: 1rem;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            display: none;
+        }
+
+        .alert.success {
+            background: #d1fae5;
+            color: #065f46;
+            border: 2px solid #10b981;
+        }
+
+        .alert.error {
+            background: #fee2e2;
+            color: #991b1b;
+            border: 2px solid #ef4444;
+        }
+
+        .alert.show {
+            display: block;
+        }
+
+        .info-box {
+            background: #f0f9ff;
+            padding: 1rem;
+            border-radius: 12px;
+            border-left: 4px solid #3b82f6;
+            margin-bottom: 2rem;
+        }
+
+        .info-box h3 {
+            color: #1e40af;
+            margin-bottom: 0.5rem;
+        }
+
+        .info-box ul {
+            margin-left: 1.5rem;
+            color: #1e3a8a;
+        }
+
+        @media (max-width: 768px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎯 Conversor de Texto para JSON</h1>
+        <p class="subtitle">Ferramenta auxiliar para criar conteúdo do ConversaLearn</p>
+
+        <div class="alert" id="alert"></div>
+
+        <div class="info-box">
+            <h3>📝 Como Usar:</h3>
+            <ul>
+                <li>Cole seu texto seguindo o formato simples abaixo</li>
+                <li>Clique em "Gerar JSON"</li>
+                <li>Copie o JSON gerado e cole no content-structure.json</li>
+            </ul>
+        </div>
+
+        <div class="grid">
+            <div class="section">
+                <label for="input">📄 Texto de Entrada (Formato Simplificado):</label>
+                <textarea id="input" placeholder="Cole aqui o texto no formato:
+
+CURSO: Matemática Básica
+LIÇÃO: Técnicas de Cálculo
+TEMPO: 3 minutos
+
+[GANCHO]
+Você sabia que seu cérebro calcula mais rápido que calculadora?
+Vamos descobrir como!
+BOTÃO: Vamos lá!
+
+[CONCEITO]
+Maria estava no mercado sem calculadora.
+Ela precisava calcular o troco de R$ 37,80 em R$ 50.
+Ela pensou: 50 - 40 = 10, então 10 + 0,20 = 12,20
+Isso é a **técnica do arredondamento**!
+BOTÃO: Entendi!
+XP: 5
+
+[QUIZ]
+PERGUNTA: Por que arredondar facilita?
+A) Porque números redondos são mais fáceis | CORRETO | Exatamente! 🎉
+B) Porque calculadoras não funcionam | ERRADO | Tente de novo!
+C) Porque Maria é professora | ERRADO | Qualquer um pode usar!
+XP_CORRETO: 10
+XP_ERRADO: 2
+
+[AÇÃO]
+Agora é sua vez! 🚀
+João comprou pão de R$ 3,80 e pagou com R$ 5,00
+Quanto de troco?
+PERGUNTA: Qual o troco?
+A) R$ 1,20 | CORRETO | Perfeito! 🔥
+B) R$ 2,20 | ERRADO | Reveja o cálculo!
+C) R$ 1,80 | ERRADO | Quase lá!
+XP_CORRETO: 15
+XP_ERRADO: 3
+
+[REFORÇO]
+Parabéns! Você completou! 🎊
+Agora você sabe usar arredondamento!
+Continue praticando! 🧠
+BOTÃO: Próxima lição
+XP_BONUS: 20"></textarea>
+            </div>
+
+            <div class="section">
+                <label for="output">📋 JSON Gerado:</label>
+                <textarea id="output" readonly placeholder="O JSON aparecerá aqui..."></textarea>
+            </div>
+        </div>
+
+        <div class="actions">
+            <button class="btn" onclick="generateJSON()">🔄 Gerar JSON</button>
+            <button class="btn btn-secondary" onclick="copyJSON()">📋 Copiar JSON</button>
+            <button class="btn btn-secondary" onclick="clearAll()">🗑️ Limpar Tudo</button>
+        </div>
+    </div>
+
+    <script>
+        function showAlert(message, type) {
+            const alert = document.getElementById('alert');
+            alert.textContent = message;
+            alert.className = `alert ${type} show`;
+            setTimeout(() => {
+                alert.classList.remove('show');
+            }, 3000);
+        }
+
+        function parseSection(lines, index) {
+            const section = { messages: [] };
+            let currentLine = index;
+
+            while (currentLine < lines.length && !lines[currentLine].startsWith('[')) {
+                const line = lines[currentLine].trim();
+
+                if (line.startsWith('BOTÃO:')) {
+                    section.button = line.replace('BOTÃO:', '').trim();
+                } else if (line.startsWith('XP:')) {
+                    section.xp = parseInt(line.replace('XP:', '').trim());
+                } else if (line.startsWith('XP_BONUS:')) {
+                    section.bonusXP = parseInt(line.replace('XP_BONUS:', '').trim());
+                } else if (line.startsWith('PERGUNTA:')) {
+                    section.question = line.replace('PERGUNTA:', '').trim();
+                } else if (line.startsWith('XP_CORRETO:')) {
+                    section.xpCorrect = parseInt(line.replace('XP_CORRETO:', '').trim());
+                } else if (line.startsWith('XP_ERRADO:')) {
+                    section.xpIncorrect = parseInt(line.replace('XP_ERRADO:', '').trim());
+                } else if (line.match(/^[ABC]\)/)) {
+                    // Parse opção de quiz
+                    const parts = line.split('|').map(p => p.trim());
+                    const optionText = parts[0].substring(3).trim();
+                    const isCorrect = parts[1] === 'CORRETO';
+                    const feedback = parts[2];
+
+                    if (!section.options) section.options = [];
+                    section.options.push({
+                        id: parts[0][0].toLowerCase(),
+                        text: optionText,
+                        correct: isCorrect,
+                        feedback: feedback
+                    });
+                } else if (line && !line.startsWith('CURSO:') && !line.startsWith('LIÇÃO:') && !line.startsWith('TEMPO:')) {
+                    section.messages.push(line);
+                }
+
+                currentLine++;
+            }
+
+            return { section, nextIndex: currentLine };
+        }
+
+        function generateJSON() {
+            const input = document.getElementById('input').value;
+            const output = document.getElementById('output');
+
+            if (!input.trim()) {
+                showAlert('Por favor, cole um texto de entrada!', 'error');
+                return;
+            }
+
+            try {
+                const lines = input.split('\n');
+                const lesson = {
+                    id: "lesson-" + Math.random().toString(36).substr(2, 9),
+                    title: "",
+                    estimatedTime: "",
+                    drops: []
+                };
+
+                let i = 0;
+                while (i < lines.length) {
+                    const line = lines[i].trim();
+
+                    if (line.startsWith('CURSO:')) {
+                        // Ignorar por enquanto
+                    } else if (line.startsWith('LIÇÃO:')) {
+                        lesson.title = line.replace('LIÇÃO:', '').trim();
+                    } else if (line.startsWith('TEMPO:')) {
+                        lesson.estimatedTime = line.replace('TEMPO:', '').trim();
+                    } else if (line.startsWith('[GANCHO]')) {
+                        const result = parseSection(lines, i + 1);
+                        lesson.drops.push({
+                            type: "gancho",
+                            sender: "professor",
+                            messages: result.section.messages.map((msg, idx) => ({
+                                text: msg,
+                                delay: idx * 1000
+                            })),
+                            interaction: {
+                                type: "continue",
+                                button: result.section.button || "Continuar"
+                            }
+                        });
+                        i = result.nextIndex - 1;
+                    } else if (line.startsWith('[CONCEITO]')) {
+                        const result = parseSection(lines, i + 1);
+                        lesson.drops.push({
+                            type: "conceito",
+                            sender: "professor",
+                            messages: result.section.messages.map((msg, idx) => ({
+                                text: msg,
+                                delay: idx * 1500
+                            })),
+                            interaction: {
+                                type: "continue",
+                                button: result.section.button || "Entendi!"
+                            },
+                            xp: result.section.xp || 5
+                        });
+                        i = result.nextIndex - 1;
+                    } else if (line.startsWith('[QUIZ]') || line.startsWith('[AÇÃO]')) {
+                        const result = parseSection(lines, i + 1);
+                        const type = line.startsWith('[QUIZ]') ? "reflexao" : "acao";
+
+                        lesson.drops.push({
+                            type: type,
+                            sender: "professor",
+                            messages: result.section.messages.filter(m => !m.startsWith('PERGUNTA:')).map((msg, idx) => ({
+                                text: msg,
+                                delay: idx * 1000
+                            })),
+                            interaction: {
+                                type: "quiz",
+                                question: result.section.question || "Escolha a opção correta:",
+                                options: result.section.options || [],
+                                xpCorrect: result.section.xpCorrect || 10,
+                                xpIncorrect: result.section.xpIncorrect || 2
+                            }
+                        });
+                        i = result.nextIndex - 1;
+                    } else if (line.startsWith('[REFORÇO]')) {
+                        const result = parseSection(lines, i + 1);
+                        lesson.drops.push({
+                            type: "reforco",
+                            sender: "professor",
+                            messages: result.section.messages.map((msg, idx) => ({
+                                text: msg,
+                                delay: idx * 1000
+                            })),
+                            interaction: {
+                                type: "complete",
+                                button: result.section.button || "Próxima lição",
+                                bonusXP: result.section.bonusXP || 20
+                            }
+                        });
+                        i = result.nextIndex - 1;
+                    }
+
+                    i++;
+                }
+
+                output.value = JSON.stringify(lesson, null, 2);
+                showAlert('JSON gerado com sucesso! ✅', 'success');
+
+            } catch (error) {
+                showAlert('Erro ao gerar JSON: ' + error.message, 'error');
+                console.error(error);
+            }
+        }
+
+        function copyJSON() {
+            const output = document.getElementById('output');
+            if (!output.value) {
+                showAlert('Gere o JSON primeiro!', 'error');
+                return;
+            }
+
+            output.select();
+            document.execCommand('copy');
+            showAlert('JSON copiado para a área de transferência! 📋', 'success');
+        }
+
+        function clearAll() {
+            document.getElementById('input').value = '';
+            document.getElementById('output').value = '';
+            showAlert('Campos limpos!', 'success');
+        }
+    </script>
+</body>
+</html>

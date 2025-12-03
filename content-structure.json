@@ -1,0 +1,171 @@
+{
+  "courses": [
+    {
+      "id": "matematica-basica",
+      "title": "Matemática Básica",
+      "description": "Aprenda matemática de forma conversacional",
+      "lessons": [
+        {
+          "id": "lesson-01",
+          "title": "Técnicas de Cálculo Mental",
+          "estimatedTime": "3 minutos",
+          "drops": [
+            {
+              "type": "gancho",
+              "sender": "professor",
+              "messages": [
+                {
+                  "text": "Você sabia que seu cérebro pode calcular mais rápido que uma calculadora em algumas situações? 🧠",
+                  "delay": 0
+                },
+                {
+                  "text": "Vamos descobrir como!",
+                  "delay": 1000
+                }
+              ],
+              "interaction": {
+                "type": "continue",
+                "button": "Vamos lá!"
+              }
+            },
+            {
+              "type": "conceito",
+              "sender": "professor",
+              "messages": [
+                {
+                  "text": "Maria precisava calcular o troco, mas estava sem calculadora.",
+                  "delay": 0
+                },
+                {
+                  "text": "Ela comprou algo por R$ 37,80 e pagou com R$ 50.",
+                  "delay": 1500
+                },
+                {
+                  "text": "Ao invés de subtrair direto, ela pensou: **\"50 - 40 = 10, então 10 + 0,20 = 12,20\"**",
+                  "delay": 2000
+                },
+                {
+                  "text": "Isso se chama **técnica do arredondamento**! 💡",
+                  "delay": 2500
+                }
+              ],
+              "interaction": {
+                "type": "continue",
+                "button": "Entendi!"
+              },
+              "xp": 5
+            },
+            {
+              "type": "reflexao",
+              "sender": "professor",
+              "messages": [
+                {
+                  "text": "Por que a técnica de Maria foi útil?",
+                  "delay": 0
+                }
+              ],
+              "interaction": {
+                "type": "quiz",
+                "question": "Por que arredondar facilita o cálculo mental?",
+                "options": [
+                  {
+                    "id": "a",
+                    "text": "Porque números redondos são mais fáceis de subtrair",
+                    "correct": true,
+                    "feedback": "Exatamente! 🎉 Trabalhar com dezenas inteiras (40, 50) é muito mais simples que 37,80"
+                  },
+                  {
+                    "id": "b",
+                    "text": "Porque calculadoras não funcionam bem",
+                    "correct": false,
+                    "feedback": "Não é isso! A técnica ajuda quando VOCÊ precisa calcular de cabeça. Tente de novo! 💪"
+                  },
+                  {
+                    "id": "c",
+                    "text": "Porque Maria é professora de matemática",
+                    "correct": false,
+                    "feedback": "Qualquer pessoa pode usar essa técnica! Não tem nada a ver com profissão. Tente outra! 😊"
+                  }
+                ],
+                "xpCorrect": 10,
+                "xpIncorrect": 2
+              }
+            },
+            {
+              "type": "acao",
+              "sender": "professor",
+              "messages": [
+                {
+                  "text": "Agora é sua vez! 🚀",
+                  "delay": 0
+                },
+                {
+                  "text": "João comprou um pão de R$ 3,80 e pagou com R$ 5,00",
+                  "delay": 1000
+                },
+                {
+                  "text": "Quanto ele receberá de troco?",
+                  "delay": 1500
+                }
+              ],
+              "interaction": {
+                "type": "quiz",
+                "question": "Qual o troco de João?",
+                "options": [
+                  {
+                    "id": "a",
+                    "text": "R$ 1,20",
+                    "correct": true,
+                    "feedback": "Perfeito! 🔥 Você arredondou 3,80 para 4,00 e calculou 5 - 4 = 1, depois somou os 0,20. Está em chamas!"
+                  },
+                  {
+                    "id": "b",
+                    "text": "R$ 2,20",
+                    "correct": false,
+                    "feedback": "Ops! Reveja o cálculo: 5,00 - 3,80. Lembre-se de arredondar para 4,00 primeiro! 🤔"
+                  },
+                  {
+                    "id": "c",
+                    "text": "R$ 1,80",
+                    "correct": false,
+                    "feedback": "Quase! Você inverteu a lógica. Tente arredondar 3,80 para 4,00 e ajustar depois! 💡"
+                  }
+                ],
+                "xpCorrect": 15,
+                "xpIncorrect": 3
+              }
+            },
+            {
+              "type": "reforco",
+              "sender": "professor",
+              "messages": [
+                {
+                  "text": "Parabéns! Você completou o Drop 1! 🎊",
+                  "delay": 0
+                },
+                {
+                  "text": "Agora você sabe como usar o **arredondamento** no dia a dia!",
+                  "delay": 1000
+                },
+                {
+                  "text": "Continue praticando e esse cálculo ficará automático! 🧠⚡",
+                  "delay": 2000
+                }
+              ],
+              "interaction": {
+                "type": "complete",
+                "button": "Próxima lição",
+                "bonusXP": 20
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "metadata": {
+    "version": "1.0",
+    "schema": "conversational-learning",
+    "description": "Estrutura JSON para webapp de micro-learning estilo chat"
+  }
+}
