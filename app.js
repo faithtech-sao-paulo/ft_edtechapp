@@ -338,22 +338,46 @@ class LessonRunner {
 // ===== Carregamento de Conteúdo =====
 async function loadContent() {
     try {
-        const response = await fetch('content-structure.json');
-        const data = await response.json();
+        let data;
 
-        // Pegar primeiro curso e primeira lição (para demonstração)
+        // Primeiro, verificar se existe conteúdo customizado no cache
+        const customContent = localStorage.getItem('conversalearn-custom-content');
+
+        if (customContent) {
+            // Usar conteúdo customizado
+            console.log('📝 Carregando conteúdo personalizado do cache...');
+            data = JSON.parse(customContent);
+
+            // Mostrar indicador visual
+            const indicator = document.getElementById('customContentIndicator');
+            if (indicator) {
+                indicator.style.display = 'flex';
+            }
+
+            // Mostrar notificação ao usuário
+            showToast('📝 Usando seu conteúdo personalizado!', 'success');
+        } else {
+            // Carregar conteúdo padrão do JSON
+            console.log('📚 Carregando conteúdo padrão...');
+            const response = await fetch('content-structure.json');
+            data = await response.json();
+        }
+
+        // Pegar primeiro curso e primeira lição
         const course = data.courses[0];
         const lesson = course.lessons[0];
 
         AppState.currentCourse = course;
         AppState.currentLesson = lesson;
 
+        console.log('✅ Lição carregada:', lesson.title);
+
         // Iniciar a lição
         const runner = new LessonRunner(lesson);
         runner.start();
 
     } catch (error) {
-        console.error('Erro ao carregar conteúdo:', error);
+        console.error('❌ Erro ao carregar conteúdo:', error);
         showToast('Erro ao carregar conteúdo. Verifique sua conexão.', 'error');
     }
 }
@@ -367,10 +391,21 @@ document.addEventListener('DOMContentLoaded', () => {
     // Carregar conteúdo
     loadContent();
 
-    // Registrar Service Worker para PWA (será criado a seguir)
+    // Registrar Service Worker para PWA
     if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('sw.js')
             .then(() => console.log('Service Worker registrado'))
             .catch(err => console.log('Erro no Service Worker:', err));
     }
 });
+
+// ===== Função Global para Limpar Conteúdo Customizado =====
+function clearCustomContent() {
+    if (confirm('Deseja remover seu conteúdo personalizado e usar o conteúdo padrão?')) {
+        localStorage.removeItem('conversalearn-custom-content');
+        showToast('🗑️ Conteúdo personalizado removido. Recarregando...', 'success');
+        setTimeout(() => {
+            location.reload();
+        }, 1500);
+    }
+}
